@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Certificate Generator</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: green;
+            color: white;
+            border: none;
+        }
+
+        #certificate {
+            width: 800px;
+            height: 500px;
+            background-color: white;
+            margin: 30px auto;
+            padding: 30px;
+            box-sizing: border-box;
+            border: 10px solid green;
+        }
+
+        h1 {
+            color: green;
+            font-size: 40px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-top: 50px;
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        #treeCount {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Certificate Generator</h1>
+
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <input type="number" id="trees" placeholder="Trees donated">
+
+    <br>
+
+    <button onclick="generateCertificate()">
+        Generate Certificate
+    </button>
+
+    <button onclick="downloadPDF()">
+        Download PDF
+    </button>
+
+
+    <!-- Certificate -->
+    <div id="certificate">
+
+        <h1> Certificate of Appreciation </h1>
+
+        <p>This certificate is presented to</p>
+
+        <h2 id="userName">Your Name</h2>
+
+        <p>
+            for donating
+            <span id="treeCount">0</span>
+            trees towards a greener environment.
+        </p>
+
+        <p>Thank you for making a difference!</p>
+
+    </div>
+
+
+    <script>
+
+        function generateCertificate() {
+
+            var name = document.getElementById("name").value;
+
+            var trees = document.getElementById("trees").value;
+
+            document.getElementById("userName").innerText = name;
+
+            document.getElementById("treeCount").innerText = trees;
+        }
+
+
+        function downloadPDF() {
+
+            var certificate = document.getElementById("certificate");
+
+            var options = {
+                margin: 0,
+                filename: "Tree_Donation_Certificate.pdf",
+                image: {
+                    type: "jpeg",
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    unit: "mm",
+                    format: "a4",
+                    orientation: "landscape"
+                }
+            };
+
+            html2pdf()
+                .set(options)
+                .from(certificate)
+                .save();
+        }
+
+    </script>
+
+</body>
+</html>
